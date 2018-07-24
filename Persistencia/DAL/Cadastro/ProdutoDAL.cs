@@ -34,13 +34,12 @@ namespace Persistencia.DAL.Cadastro
             if(produto.ProdutoId == null)
             {
                 context.Produtos.Add(produto);
-                context.SaveChanges();
             }
             else
             {
                 context.Entry(produto).State = EntityState.Modified;
-                context.SaveChanges();
             }
+            context.SaveChanges();
         }
 
         public Produto EliminarProdutoPorId(long id)

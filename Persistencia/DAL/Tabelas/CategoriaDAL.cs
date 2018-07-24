@@ -12,9 +12,36 @@ namespace Persistencia.DAL.Tabelas
     {
         private EFContext context = new EFContext();
 
-        public IQueryable<Categoria> ObterCategoriasClassificadasPorNome()
+        public IQueryable<Categoria> ObterCategoriaClassificadasPorNome()
         {
             return context.Categorias.OrderBy(x => x.Nome);
+        }
+
+        public Categoria ObterCategoriaPorId(long? id)
+        {
+            return context.Categorias.Find(id);
+        }
+
+        public void GravarCategoria(Categoria categoria)
+        {
+            //if(categoria.CategoriaId == null)
+            if(categoria.CategoriaId.Equals(0) || categoria.CategoriaId == null)
+            {
+                context.Categorias.Add(categoria);
+            }
+            else
+            {
+                context.Entry(categoria).State = System.Data.Entity.EntityState.Modified;
+            }
+            context.SaveChanges();
+        }
+
+        public Categoria EliminarCategoriaPorId(long id)
+        {
+            var categoria = ObterCategoriaPorId(id);
+            context.Categorias.Remove(categoria);
+            context.SaveChanges();
+            return categoria;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model Model.Cadastro.Fabricante
 
 
-    @{
+@{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -10,12 +10,11 @@
 }
 
 
-
 <div class="panel panel-primary">
 
     <div class="panel-heading">
 
-        Dados do fabricante a ser removido
+        Visualizando detalhes do Fabricante a ser removido
 
     </div>
 
@@ -39,22 +38,105 @@
 
         </div>
 
-    </div>
+        <div class="panel-footer panel-info">
 
-    <div class="panel-footer panel-info">
-
-        @using (Html.BeginForm())
-
-        {
-
-            @Html.AntiForgeryToken()
-
-            <input type="submit" value="Remover FABRICANTE" class="btn btn-danger" />
+            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#deleteConfirmationModal">Remover</a>
 
             @Html.ActionLink("Retornar para a listagem", "Index", null, new { @class = "btn btn-info" })
 
-        }
+        </div>
 
     </div>
 
+
+
+
+
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" datadismiss="modal" aria-hidden="true">
+
+                        &times;
+
+                    </button>
+
+                    <h4 class="modal-title">Confirmação de exclusão da Fabricante</h4>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <p>
+
+                        Você está prestes a remover o fabricante @Model.Nome.ToUpper() do cadastro.
+
+                    </p>
+
+                    <p>
+
+                        <strong>
+
+                            Você está certo que deseja prosseguir?
+
+                        </strong>
+
+                    </p>
+
+                    @using (Html.BeginForm("Delete", "Fabricantes", FormMethod.Post, new { @id = "delete-form", role = "form" }))
+
+                    {
+
+                        @Html.HiddenFor(m => m.FabricanteId)
+
+                        @Html.AntiForgeryToken()
+
+                    }
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" onclick="$('#delete-form').submit();">
+
+                        Sim, exclua esta fabricante.
+
+                    </button>
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+
+                        Não, não exclua esta fabricante.
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    @section ScriptPage {
+
+        <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('li').removeClass("active");
+
+            $('#liProdutos').addClass("active");
+
+        });
+
+        </script>
+
+    }
 </div>

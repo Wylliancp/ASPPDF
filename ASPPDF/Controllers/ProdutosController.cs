@@ -153,7 +153,7 @@ namespace ASPPDF.Controllers
                 //var produto = context.Produtos.Find(id);
                 //context.Produtos.Remove(produto);
                 //context.SaveChanges();
-                var produto = produtoServico.ObterProdutoPorId(id);
+                var produto = produtoServico.EliminarProdutoPorId(id);
                 TempData["Message"] = "Produto " + produto.Nome.ToUpper() + " Foi Removido!";
                 return RedirectToAction("Index");
             }
